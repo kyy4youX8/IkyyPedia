@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#060a12">
+  <title>IkyyPediaa — SMM Panel</title>
+  <style>
+    :root{--bg:#060a12;--panel:rgba(15,23,42,.72);--panel2:rgba(30,41,59,.65);--text:#f1f5f9;--muted:#94a3b8;--line:rgba(148,163,184,.18);--primary:#22d3ee;--primary2:#a78bfa;--danger:#fb7185;--ok:#34d399;--shadow:0 20px 50px rgba(0,0,0,.45);--glow:0 0 40px rgba(34,211,238,.15);--radius:16px}
+    body.light{--bg:#f0f4f8;--panel:rgba(255,255,255,.85);--panel2:#f8fafc;--text:#0f172a;--muted:#64748b;--line:rgba(148,163,184,.35);--primary:#0891b2;--primary2:#7c3aed;--shadow:0 12px 32px rgba(15,23,42,.08);--glow:0 0 30px rgba(8,145,178,.12)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 80% 50% at 20% -10%, rgba(34,211,238,.18), transparent 50%),radial-gradient(ellipse 60% 40% at 80% 10%, rgba(167,139,250,.16), transparent 45%),radial-gradient(ellipse 50% 30% at 50% 100%, rgba(251,113,133,.08), transparent 40%);animation:auroraShift 18s ease-in-out infinite alternate}body.light::before{background:radial-gradient(ellipse 80% 50% at 20% -10%, rgba(8,145,178,.12), transparent 50%),radial-gradient(ellipse 60% 40% at 80% 10%, rgba(124,58,237,.1), transparent 45%)}@keyframes auroraShift{0%{filter:hue-rotate(0deg) brightness(1)}100%{filter:hue-rotate(25deg) brightness(1.05)}}
+    body::after{content:"";position:fixed;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);top:-120px;right:-80px;z-index:-1;animation:floatOrb 14s ease-in-out infinite;pointer-events:none}@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,60px) scale(1.1)}}
+    button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;transition:all .22s cubic-bezier(.2,.8,.2,1)}.app{display:flex;min-height:100vh}.side{width:250px;background:rgba(8,12,24,.75);backdrop-filter:blur(22px) saturate(1.4);border-right:1px solid var(--line);padding:22px 14px;position:fixed;inset:0 auto 0 0;z-index:10;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease}body.light .side{background:rgba(255,255,255,.88)}.brand{display:flex;align-items:center;gap:12px;padding:8px 10px 22px;font-weight:900;font-size:19px;letter-spacing:-.3px}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 8px 24px rgba(34,211,238,.35);position:relative;overflow:hidden}.logo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);animation:shine 3.5s ease-in-out infinite}@keyframes shine{0%,100%{transform:translateX(-120%)}50%{transform:translateX(120%)}}
+    .nav{display:flex;flex-direction:column;gap:6px;overflow-y:auto;max-height:calc(100vh - 100px);scrollbar-width:thin}.nav button{width:100%;text-align:left;padding:12px 14px;background:transparent;color:var(--muted);border-radius:12px;display:flex;align-items:center;gap:10px;font-weight:500}.nav button:hover{background:var(--panel2);color:var(--text);transform:translateX(3px)}.nav button.active{background:linear-gradient(90deg,rgba(34,211,238,.15),transparent);color:var(--text);box-shadow:inset 3px 0 0 var(--primary)}
+    .main{margin-left:250px;width:calc(100% - 250px);padding:26px;max-width:1450px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.brand-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--primary);font-weight:800;margin-bottom:4px;opacity:.9}.title h1{margin:0;font-size:clamp(28px,4vw,42px);font-weight:900;letter-spacing:-1.2px;line-height:1.1;background:linear-gradient(135deg,var(--text) 30%,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.title p{margin:6px 0 0;color:var(--muted);font-size:14px}.actions{display:flex;gap:9px;align-items:center}
+    .btn{padding:11px 16px;border-radius:12px;background:var(--panel2);color:var(--text);border:1px solid var(--line);font-weight:600}.btn:hover{border-color:var(--primary);transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,var(--primary),#06b6d4);border:0;color:#0f172a;font-weight:800;box-shadow:0 8px 24px rgba(34,211,238,.3)}.btn.primary:hover{filter:brightness(1.08);box-shadow:0 10px 28px rgba(34,211,238,.4)}.btn.danger{color:#fff;background:var(--danger)}.btn.ok{color:#0f172a;background:var(--ok)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(12px);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.card:hover{transform:translateY(-3px);border-color:rgba(34,211,238,.35);box-shadow:var(--shadow),var(--glow)}body.light .card{background:var(--panel)}.stat small{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}.stat strong{display:block;font-size:26px;margin-top:8px;font-weight:800;letter-spacing:-.5px}.stat .icon{float:right;font-size:24px;opacity:.85;filter:drop-shadow(0 0 8px rgba(34,211,238,.4))}
+    .stat strong[style*="ONLINE"],.online-badge{position:relative;display:inline-flex;align-items:center;gap:6px}.online-badge::before,.stat:last-child strong::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(52,211,153,.5);animation:pulseLive 1.8s infinite;display:inline-block;margin-right:6px;vertical-align:middle}@keyframes pulseLive{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}70%{box-shadow:0 0 0 10px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+    .layout{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.section{margin-bottom:18px}.section h2{font-size:17px;margin:0 0 14px;font-weight:800;letter-spacing:-.3px}label{display:block;font-size:13px;color:var(--muted);margin:0 0 7px;font-weight:600}input,select,textarea{width:100%;padding:12px 14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(34,211,238,.18)}textarea{min-height:105px;resize:vertical}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.service-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.pill{font-size:11px;padding:5px 10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}.price{font-size:32px;font-weight:900;margin:8px 0;letter-spacing:-1px;background:linear-gradient(135deg,var(--primary),var(--primary2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.muted{color:var(--muted)}.searchrow{display:grid;grid-template-columns:1fr 180px;gap:10px;margin-bottom:12px}.service-list{max-height:390px;overflow:auto;border:1px solid var(--line);border-radius:14px}.service{padding:13px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;transition:background .15s}.service:last-child{border-bottom:0}.service:hover{background:var(--panel2)}.service b{font-size:13px}.service small{display:block;color:var(--muted);margin-top:4px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}.table th{color:var(--muted);font-weight:600}.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;background:var(--panel2);font-weight:600}.toast{position:fixed;right:20px;bottom:20px;z-index:99;padding:14px 18px;border-radius:14px;background:rgba(15,23,42,.92);color:white;box-shadow:var(--shadow);display:none;max-width:340px;border:1px solid var(--line);backdrop-filter:blur(12px);animation:toastIn .3s ease}@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.page{display:none;animation:pageIn .35s ease}.page.active{display:block}@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.empty{text-align:center;padding:40px;color:var(--muted)}.deposit-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.qris-image{display:block;width:100%;max-width:440px;margin:12px auto;border-radius:14px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.2)}.notice{padding:13px 15px;border:1px solid var(--line);background:var(--panel2);border-radius:13px;color:var(--muted);font-size:13px;line-height:1.65}.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}.platform{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:13px;background:var(--panel2);border:1px solid var(--line);color:var(--text);font-weight:600;font-size:13px;transition:all .22s ease}.platform:hover,.platform.selected{border-color:var(--platform-color,var(--primary));background:color-mix(in srgb,var(--platform-color,var(--primary)) 12%,transparent);transform:translateY(-2px);box-shadow:0 8px 20px color-mix(in srgb,var(--platform-color,var(--primary)) 25%,transparent)}.platform-icon{width:34px;height:34px;border-radius:10px;background:var(--platform-color,#64748b);color:#fff;display:grid;place-items:center;font-size:15px;font-weight:800;flex-shrink:0}.icon-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;border-radius:12px;font-size:18px;font-weight:800;background:var(--panel2);color:var(--text);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.12)}.icon-btn:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 0 20px rgba(34,211,238,.2)}.theme-icon{font-size:20px;line-height:1}.profile-icon-btn .profile-icon{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:13px}.side{transform:translateX(-105%);box-shadow:none}.side.open{transform:translateX(0);box-shadow:20px 0 55px rgba(0,0,0,.35)}.side-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:9;opacity:0;pointer-events:none;transition:opacity .25s ease}.side-backdrop.open{opacity:1;pointer-events:auto}.main{margin-left:0;width:100%;max-width:1450px;margin-right:auto}.top{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}.top .title{grid-column:2;text-align:center}.top .actions{grid-column:1/4;grid-row:1;display:flex;justify-content:space-between;width:100%;pointer-events:none}.top .actions>*{pointer-events:auto}.top .actions .right-actions{margin-left:auto;display:flex;gap:8px;align-items:center}.menu-left{display:flex;gap:8px;align-items:center}.auth-cover{display:none;position:fixed;inset:0;background:rgba(2,6,23,.78);backdrop-filter:blur(10px);z-index:120;place-items:center;padding:18px}.auth-box{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px 24px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}.auth-error{display:none;color:#fecaca;background:rgba(251,113,133,.15);border:1px solid rgba(251,113,133,.35);border-radius:10px;padding:10px 12px;font-size:13px;margin:0 0 12px}.auth-error.show{display:block;animation:errorIn .22s ease}@keyframes errorIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}.deposit-processing-cover{position:fixed;inset:0;z-index:260;display:none;place-items:center;padding:20px;background:rgba(4,8,20,.8);backdrop-filter:blur(12px)}.deposit-processing-card{width:min(100%,360px);text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px 22px;box-shadow:var(--shadow)}.deposit-spinner{width:54px;height:54px;margin:0 auto 16px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--primary);animation:depositSpin .8s linear infinite}@keyframes depositSpin{to{transform:rotate(360deg)}}.site-footer,.site-footer-v9{width:100%;padding:22px 18px 28px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8;border-top:1px solid var(--line);margin-top:28px}.site-footer strong,.site-footer-v9 strong{color:var(--text)}.site-footer a{color:var(--primary);text-decoration:none;font-weight:600}.site-footer a:hover{text-decoration:underline}.pw-wrap{position:relative;display:flex;align-items:center}.pw-wrap input{width:100%;padding-right:46px}.pw-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:10px;border:none;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:18px;padding:0}.pw-toggle:hover{color:var(--text);background:var(--panel2)}.contact-admin-btn{width:100%;text-align:left;padding:12px 14px;margin-top:8px;background:rgba(34,211,238,.08);color:var(--primary);border:1px solid rgba(34,211,238,.25);border-radius:12px;display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none}.contact-admin-btn:hover{background:rgba(34,211,238,.15);transform:translateX(3px)}@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}}@media(max-width:650px){.side{width:250px}.main{padding:15px 13px calc(40px + env(safe-area-inset-bottom))}.grid{grid-template-columns:1fr 1fr;gap:10px}.formgrid,.searchrow{grid-template-columns:1fr}.title h1{font-size:26px}.top .title p,.brand-kicker{display:none}.right-actions .btn:not(#themeBtn){display:none}.deposit-layout{grid-template-columns:1fr}.qris-image{max-width:320px}.site-footer,.site-footer-v9{padding-bottom:28px}}.platform .platform-icon{transition:transform .3s ease}.platform:hover .platform-icon{transform:scale(1.08)}html,body{max-width:100%;overflow-x:hidden}.order-layout,.order-layout *{min-width:0}.order-layout{overflow:hidden}.platform-grid.compact{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))!important;gap:8px}.platform.compact-platform{min-height:48px;justify-content:flex-start;padding:9px 12px}.order-layout .btn.primary{min-height:48px;width:100%}.modal-cover{display:none;position:fixed;inset:0;z-index:150;background:rgba(2,6,23,.78);backdrop-filter:blur(10px);place-items:center;padding:18px}.modal-box{width:min(440px,100%);max-height:90vh;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow);backdrop-filter:blur(16px);animation:modalIn .28s ease}@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0;font-size:20px;font-weight:800}.profile-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}.profile-avatar{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px;box-shadow:0 8px 24px rgba(34,211,238,.3)}.profile-meta strong{display:block;font-size:18px}.profile-meta small{color:var(--muted)}.profile-stat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.profile-stat .card{padding:14px}.profile-stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.profile-stat strong{font-size:16px}#passwordForm h3{font-size:15px;margin:18px 0 12px}#passwordForm .field{margin-bottom:12px}#passwordForm .btn{width:100%;margin-top:6px}.filter-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:12px 0 8px}.filter-row{display:flex!important;flex-wrap:wrap;gap:8px!important;grid-template-columns:unset!important}.filter-chip{width:auto!important;min-width:0;padding:8px 14px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;white-space:nowrap;transition:all .2s ease;display:inline-flex;align-items:center;justify-content:center}.filter-chip:hover{border-color:var(--primary);color:var(--text);transform:translateY(-1px)}.filter-chip.selected{background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(167,139,250,.15));border-color:var(--primary);color:var(--text);box-shadow:0 0 0 1px var(--primary),0 6px 16px rgba(34,211,238,.2)}.platform-icon{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="sideMenu">
+      <div class="brand">
+        <div class="logo">I</div>
+        IkyyPedia
+      </div>
+      <nav class="nav">
+        <button class="active" data-page="dashboard">🏠 Dashboard</button>
+        <button data-page="order">🛒 Order</button>
+        <button data-page="services">📦 Services</button>
+        <button data-page="deposit">💳 Deposit</button>
+        <button data-page="history">📜 History</button>
+        <button data-page="tickets">🎫 Tickets</button>
+      </nav>
+    </aside>
+    <main class="main">
+      <div class="top">
+        <div class="actions">
+          <div class="menu-left"><button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button></div>
+          <div class="right-actions">
+            <button class="icon-btn theme-icon" id="themeBtn" aria-label="Theme">☀️</button>
+            <button class="icon-btn profile-icon-btn" id="profileBtn" aria-label="Profile"><span class="profile-icon">A</span></button>
+          </div>
+        </div>
+        <div class="title">
+          <div class="brand-kicker">SMM Panel</div>
+          <h1>IkyyPediaa</h1>
+          <p>Kelola order, deposit, dan layanan sosial media dengan cepat.</p>
+        </div>
+      </div>
+
+      <section class="page active" data-page="dashboard">
+        <div class="grid">
+          <div class="card stat"><small>Total Order</small><span class="icon">📦</span><strong>1.284</strong></div>
+          <div class="card stat"><small>Saldo</small><span class="icon">💰</span><strong>Rp 14.250.000</strong></div>
+          <div class="card stat"><small>Pending</small><span class="icon">⏳</span><strong>42</strong></div>
+          <div class="card stat"><small>Status</small><span class="icon">🟢</span><strong style="display:inline-block">ONLINE</strong></div>
+        </div>
+        <div class="layout">
+          <div>
+            <div class="section">
+              <h2>Order Baru</h2>
+              <div class="card">
+                <div class="formgrid">
+                  <div><label>Platform</label><select><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>YouTube</option></select></div>
+                  <div><label>Jenis Layanan</label><select><option>Followers</option><option>Likes</option><option>Views</option><option>Comments</option></select></div>
+                  <div class="full"><label>Link/Username</label><input type="text" placeholder="https://instagram.com/username"></div>
+                  <div><label>Jumlah</label><input type="number" value="1000"></div>
+                  <div><label>Target</label><input type="text" value="Indonesia"></div>
+                </div>
+                <div class="service-meta" style="margin-top:16px;"><span class="pill">Delivery: 24h</span><span class="pill">Refill: 30 Days</span><span class="pill">Support: 24/7</span></div>
+                <div style="margin-top:18px;"><button class="btn primary">Buat Order</button></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="section">
+              <h2>Ringkasan</h2>
+              <div class="card">
+                <div class="price">Rp 540.000</div>
+                <div class="muted">Estimasi total untuk order yang sedang dibuat.</div>
+                <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px;">
+                  <div><strong>1,000</strong> <span class="muted">followers</span></div>
+                  <div><strong>Rp 540</strong> <span class="muted">/1000</span></div>
+                  <div><strong>7 mins</strong> <span class="muted">persiapan</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="order">
+        <div class="section">
+          <h2>Pesanan Aktif</h2>
+          <div class="card tablewrap">
+            <table class="table">
+              <thead><tr><th>ID</th><th>Platform</th><th>Qty</th><th>Harga</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>#IKY001</td><td>Instagram</td><td>2.500</td><td>Rp 780.000</td><td><span class="badge">Processing</span></td></tr>
+                <tr><td>#IKY002</td><td>TikTok</td><td>5.000</td><td>Rp 1.250.000</td><td><span class="badge">In Progress</span></td></tr>
+                <tr><td>#IKY003</td><td>Youtube</td><td>800</td><td>Rp 560.000</td><td><span class="badge">Completed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="services">
+        <div class="section">
+          <h2>Daftar Layanan</h2>
+          <div class="card">
+            <div class="searchrow"><input type="text" placeholder="Cari layanan..."><select><option>Semua</option><option>Instagram</option><option>TikTok</option><option>Youtube</option></select></div>
+            <div class="service-list">
+              <div class="service"><div><b>Instagram Followers</b><small>Real / High Quality / Slow</small></div><button class="btn">Detail</button></div>
+              <div class="service"><div><b>Instagram Likes</b><small>Fast Delivery / 100% Safe</small></div><button class="btn">Detail</button></div>
+              <div class="service"><div><b>TikTok Views</b><small>Instant / Gradual</small></div><button class="btn">Detail</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="deposit">
+        <div class="section">
+          <h2>Deposit</h2>
+          <div class="card deposit-layout">
+            <div>
+              <label>Nominal Deposit</label>
+              <input type="number" value="500000">
+              <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn">Rp 50.000</button>
+                <button class="btn">Rp 100.000</button>
+                <button class="btn">Rp 250.000</button>
+                <button class="btn">Rp 500.000</button>
+              </div>
+              <div style="margin-top:20px;"><button class="btn primary" style="width:100%;">Lanjutkan Deposit</button></div>
+            </div>
+            <div>
+              <label>Pembayaran QRIS</label>
+              <img class="qris-image" alt="QRIS" src="qris.jpg">
+              <div class="notice" style="margin-top:12px;">Transfer sesuai nominal deposit, lalu upload bukti pembayaran untuk otomatisasi saldo.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="history">
+        <div class="section"><h2>Riwayat Aktivitas</h2><div class="card tablewrap"><table class="table"><thead><tr><th>Waktu</th><th>Aktivitas</th><th>Status</th></tr></thead><tbody><tr><td>10:12</td><td>Order #IKY001 dibuat</td><td><span class="badge">Success</span></td></tr><tr><td>09:45</td><td>Deposit Rp 500.000 berhasil</td><td><span class="badge">Success</span></td></tr><tr><td>08:20</td><td>Ticket #TK-204 dibalas</td><td><span class="badge">Info</span></td></tr></tbody></table></div></div>
+      </section>
+
+      <section class="page" data-page="tickets">
+        <div class="section"><h2>Ticket Support</h2><div class="card"><label>Subjek</label><input type="text" placeholder="Judul ticket..."><label style="margin-top:12px;">Pesan</label><textarea placeholder="Tulis keluhan atau pertanyaan Anda..."></textarea><div style="margin-top:16px;"><button class="btn primary">Kirim Ticket</button></div></div></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const pages=[...document.querySelectorAll('.page')];const navButtons=[...document.querySelectorAll('.nav button')];const menuBtn=document.getElementById('menuBtn');const sideMenu=document.getElementById('sideMenu');const themeBtn=document.getElementById('themeBtn');const profileBtn=document.getElementById('profileBtn');const toast=document.getElementById('toast');
+    function showToast(message){toast.textContent=message;toast.style.display='block';clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.style.display='none',2200)}
+    navButtons.forEach(btn=>{btn.addEventListener('click',()=>{const target=btn.dataset.page;navButtons.forEach(b=>b.classList.toggle('active',b===btn));pages.forEach(page=>page.classList.toggle('active',page.dataset.page===target));sideMenu.classList.remove('open')})});
+    menuBtn.addEventListener('click',()=>sideMenu.classList.toggle('open'));
+    themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');const isLight=document.body.classList.contains('light');themeBtn.textContent=isLight?'🌙':'☀️';showToast(isLight?'Tema terang aktif':'Tema gelap aktif')});
+    profileBtn.addEventListener('click',()=>showToast('Profil pengguna'));
+  </script>
+</body>
+</html>
